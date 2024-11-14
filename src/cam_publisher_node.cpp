@@ -350,7 +350,7 @@ void CamPublisherNode::populateHighFrequencyContainer(
         curvature * DE_CurvatureValue_Factor);  // 1/m to 0.0001 1/m
 
       // Use appropriate confidence value
-      container.curvature.curvature_confidence.value = etsi_its_cam_msgs::msg::CurvatureConfidence::ONE_PER_METER_0_0001;  // Adjust as needed
+      container.curvature.curvature_confidence.value = etsi_its_cam_msgs::msg::CurvatureConfidence::ONE_PER_METER_0_0001; 
 
       used_yaw_rate = false;
     }
