@@ -46,6 +46,7 @@ ament_target_dependencies(cam_publisher_node
   sensor_msgs
   geometry_msgs
   autoware_planning_msgs
+  GeographicLib
 )
 
 # Install executables

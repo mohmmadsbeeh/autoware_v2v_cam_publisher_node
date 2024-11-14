@@ -1,10 +1,11 @@
+
 <?xml version="1.0"?>
 <package format="2">
   <name>autoware_v2x_cam_publisher</name>
   <version>0.1.0</version>
   <description>The autoware_v2x_cam_publisher package publishes CAM messages for V2X communication.</description>
 
-  <maintainer email="Mohammad.sbeeh@tha.de">Mohammad Sbeeh</maintainer>
+   <maintainer email="Mohammad.sbeeh@tha.de">Mohammad Sbeeh</maintainer>
 
   <license>Apache License 2.0</license>
 
@@ -20,12 +21,12 @@
   <build_depend>tf2</build_depend>
   <build_depend>tf2_ros</build_depend>
   <build_depend>tf2_geometry_msgs</build_depend>
-  <build_depend>GeographicLib</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>autoware_planning_msgs</build_depend>
+  <build_depend>GeographicLib</build_depend>
 
-  <!-- Run dependencies -->
+  <!-- Execution dependencies -->
   <exec_depend>rclcpp</exec_depend>
   <exec_depend>nav_msgs</exec_depend>
   <exec_depend>autoware_vehicle_msgs</exec_depend>
@@ -35,10 +36,10 @@
   <exec_depend>tf2</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
   <exec_depend>tf2_geometry_msgs</exec_depend>
-  <exec_depend>GeographicLib</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>autoware_planning_msgs</exec_depend>
+  <exec_depend>GeographicLib</exec_depend>
 
   <!-- Export -->
   <export>
