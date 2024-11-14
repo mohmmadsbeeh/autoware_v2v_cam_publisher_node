@@ -1,0 +1,3 @@
+cam_publisher_node:
+  ros__parameters:
+    station_id: 12345  # Unique identifier for your vehicle
