@@ -7,7 +7,7 @@
 // Include UTMUPS
 #include <GeographicLib/UTMUPS.hpp>
 
-// Standard Libraries
+
 #include <cmath>
 
 namespace cam_publisher
@@ -18,7 +18,7 @@ CamPublisherNode::CamPublisherNode(const rclcpp::NodeOptions & options)
   ref_lat_(this->declare_parameter<double>("reference_latitude", 0.0)),
   ref_lon_(this->declare_parameter<double>("reference_longitude", 0.0)),
   ref_alt_(this->declare_parameter<double>("reference_altitude", 0.0)),
-  vehicle_info_utils_(*this)  // Pass *this to match the expected constructor
+  vehicle_info_utils_(*this)  
 {
   RCLCPP_INFO(this->get_logger(), "Initializing CAM Publisher Node...");
 
@@ -216,13 +216,13 @@ void CamPublisherNode::populateHighFrequencyContainer(
     heading_deg += 360.0;
   container.heading.heading_value.value = static_cast<uint16_t>(
     heading_deg * DE_HeadingValue_Factor);  // Degrees to 0.1 degrees
-  container.heading.heading_confidence.value = etsi_its_cam_msgs::msg::HeadingConfidence::EQUAL_OR_WITHIN_ZERO_POINT_ONE_DEGREE;  // Best confidence
+  container.heading.heading_confidence.value = etsi_its_cam_msgs::msg::HeadingConfidence::EQUAL_OR_WITHIN_ZERO_POINT_ONE_DEGREE;   
 
   // Speed
-  double speed_mps = kinematic_state_->twist.twist.linear.x;  // Only use linear.x
+  double speed_mps = kinematic_state_->twist.twist.linear.x;  
   container.speed.speed_value.value = static_cast<uint16_t>(
     std::abs(speed_mps) * DE_SpeedValue_Factor);  // m/s to cm/s
-  container.speed.speed_confidence.value = etsi_its_cam_msgs::msg::SpeedConfidence::EQUAL_OR_WITHIN_ONE_CENTIMETER_PER_SEC;  // Best confidence
+  container.speed.speed_confidence.value = etsi_its_cam_msgs::msg::SpeedConfidence::EQUAL_OR_WITHIN_ONE_CENTIMETER_PER_SEC;   
 
   // Drive Direction
   if (speed_mps >= 0)
@@ -251,7 +251,7 @@ void CamPublisherNode::populateHighFrequencyContainer(
     container.longitudinal_acceleration.longitudinal_acceleration_value.value = static_cast<int16_t>(
       longitudinal_acc_mps2 * DE_LongitudinalAccelerationValue_Factor);  // m/s^2 to 0.1 m/s^2
     container.longitudinal_acceleration.longitudinal_acceleration_confidence.value =
-      etsi_its_cam_msgs::msg::AccelerationConfidence::POINT_ONE_METER_PER_SEC_SQUARED;  // Best confidence
+      etsi_its_cam_msgs::msg::AccelerationConfidence::POINT_ONE_METER_PER_SEC_SQUARED;   
   }
   else
   {
@@ -264,7 +264,7 @@ void CamPublisherNode::populateHighFrequencyContainer(
   double yaw_rate_rps = kinematic_state_->twist.twist.angular.z;
   container.yaw_rate.yaw_rate_value.value = static_cast<int16_t>(
     yaw_rate_rps * DE_YawRateValue_Factor);  // rad/s to 0.0001 rad/s
-  container.yaw_rate.yaw_rate_confidence.value = etsi_its_cam_msgs::msg::YawRateConfidence::DEG_SEC_000_01;  // Best confidence
+  container.yaw_rate.yaw_rate_confidence.value = etsi_its_cam_msgs::msg::YawRateConfidence::DEG_SEC_000_01;   
 
   // Steering Wheel Angle
   if (steering_report_)
@@ -273,7 +273,7 @@ void CamPublisherNode::populateHighFrequencyContainer(
     container.steering_wheel_angle.steering_wheel_angle_value.value = static_cast<int16_t>(
       steering_report_->steering_tire_angle * DE_SteeringWheelAngleValue_Factor);  // rad to 0.0001 rad
     container.steering_wheel_angle.steering_wheel_angle_confidence.value =
-      etsi_its_cam_msgs::msg::SteeringWheelAngleConfidence::EQUAL_OR_WITHIN_ONE_POINT_FIVE_DEGREE;  // Best confidence
+      etsi_its_cam_msgs::msg::SteeringWheelAngleConfidence::EQUAL_OR_WITHIN_ONE_POINT_FIVE_DEGREE;   
   }
   else
   {
@@ -288,14 +288,14 @@ void CamPublisherNode::populateHighFrequencyContainer(
     container.lateral_acceleration.lateral_acceleration_value.value = static_cast<int16_t>(
       lateral_acc_mps2 * DE_LongitudinalAccelerationValue_Factor);  // m/s^2 to 0.1 m/s^2
     container.lateral_acceleration.lateral_acceleration_confidence.value =
-      etsi_its_cam_msgs::msg::AccelerationConfidence::POINT_ONE_METER_PER_SEC_SQUARED;  // Best confidence
+      etsi_its_cam_msgs::msg::AccelerationConfidence::POINT_ONE_METER_PER_SEC_SQUARED;   
 
     double vertical_acc_mps2 = imu_data_->linear_acceleration.z;
     container.vertical_acceleration_is_present = true;
     container.vertical_acceleration.vertical_acceleration_value.value = static_cast<int16_t>(
       vertical_acc_mps2 * DE_LongitudinalAccelerationValue_Factor);  // m/s^2 to 0.1 m/s^2
     container.vertical_acceleration.vertical_acceleration_confidence.value =
-      etsi_its_cam_msgs::msg::AccelerationConfidence::POINT_ONE_METER_PER_SEC_SQUARED;  // Best confidence
+      etsi_its_cam_msgs::msg::AccelerationConfidence::POINT_ONE_METER_PER_SEC_SQUARED;   
   }
   else
   {
@@ -314,14 +314,14 @@ void CamPublisherNode::populateHighFrequencyContainer(
     container.curvature.curvature_value.value = static_cast<int16_t>(
       curvature * DE_CurvatureValue_Factor);  // 1/m to 0.0001 1/m
 
-    // Use appropriate confidence value
-    container.curvature.curvature_confidence.value = etsi_its_cam_msgs::msg::CurvatureConfidence::ONE_PER_METER_0_0001;  // Adjust as needed
+    
+    container.curvature.curvature_confidence.value = etsi_its_cam_msgs::msg::CurvatureConfidence::ONE_PER_METER_0_0001;  
 
     used_yaw_rate = true;
   }
-  else if (trajectory_)
+  else if (trajectory_) // Use trajectory data to compute curvature if yaw rate is not available
   {
-    // Use trajectory data to compute curvature if yaw rate is not available
+    
     if (trajectory_->points.size() >= 3)
     {
       auto & p0 = trajectory_->points[0];
@@ -349,14 +349,14 @@ void CamPublisherNode::populateHighFrequencyContainer(
       container.curvature.curvature_value.value = static_cast<int16_t>(
         curvature * DE_CurvatureValue_Factor);  // 1/m to 0.0001 1/m
 
-      // Use appropriate confidence value
+     
       container.curvature.curvature_confidence.value = etsi_its_cam_msgs::msg::CurvatureConfidence::ONE_PER_METER_0_0001; 
 
       used_yaw_rate = false;
     }
     else
     {
-      // Set curvature to unavailable
+      
       container.curvature.curvature_value.value = etsi_its_cam_msgs::msg::CurvatureValue::UNAVAILABLE;
       container.curvature.curvature_confidence.value = etsi_its_cam_msgs::msg::CurvatureConfidence::UNAVAILABLE;
       used_yaw_rate = false;
@@ -364,7 +364,7 @@ void CamPublisherNode::populateHighFrequencyContainer(
   }
   else
   {
-    // Set curvature to unavailable
+    
     container.curvature.curvature_value.value = etsi_its_cam_msgs::msg::CurvatureValue::UNAVAILABLE;
     container.curvature.curvature_confidence.value = etsi_its_cam_msgs::msg::CurvatureConfidence::UNAVAILABLE;
     used_yaw_rate = false;
@@ -464,7 +464,7 @@ void CamPublisherNode::updatePathHistory()
     int32_t delta_longitude = static_cast<int32_t>(delta_longitude_deg * DE_Longitude_Factor);
 
     // Compute delta time
-    double prev_time = path_history_.back().path_delta_time.value / 1000.0;  // milliseconds to seconds
+    double prev_time = path_history_.back().path_delta_time.value / Sec_Mili;  // milliseconds to seconds
     double delta_time = current_time - prev_time;
 
     etsi_its_cam_msgs::msg::PathPoint path_point;
