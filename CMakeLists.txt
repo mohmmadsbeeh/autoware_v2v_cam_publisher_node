@@ -32,7 +32,7 @@ add_executable(cam_publisher_node
   src/cam_publisher_node.cpp
 )
 
-# Specify libraries to link a library or executable target against
+# Specify dependencies for ament
 ament_target_dependencies(cam_publisher_node
   rclcpp
   nav_msgs
@@ -46,7 +46,11 @@ ament_target_dependencies(cam_publisher_node
   sensor_msgs
   geometry_msgs
   autoware_planning_msgs
-  GeographicLib
+)
+
+# Link against GeographicLib
+target_link_libraries(cam_publisher_node
+  GeographicLib::Geographic
 )
 
 # Install executables
