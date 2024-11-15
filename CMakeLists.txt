@@ -25,6 +25,7 @@ find_package(autoware_planning_msgs REQUIRED)
 # Include directories
 include_directories(
   include
+  ${GeographicLib_INCLUDE_DIRS}  
 )
 
 # Declare the executable
@@ -48,9 +49,9 @@ ament_target_dependencies(cam_publisher_node
   autoware_planning_msgs
 )
 
-# Link against GeographicLib
+# Link against GeographicLib using variables
 target_link_libraries(cam_publisher_node
-  GeographicLib::Geographic
+  ${GeographicLib_LIBRARIES}
 )
 
 # Install executables
