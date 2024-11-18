@@ -4,7 +4,7 @@
     docker build -t autoware_v2x_with_etsi:latest .
 
 
- u should run the the container from the docker compose file via 
+ you should run the the container from the docker compose file via 
     
     docker-compose up
 
