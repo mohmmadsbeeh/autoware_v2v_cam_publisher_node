@@ -15,7 +15,6 @@ RUN apt-get update && apt-get install -y \
 
 RUN rosdep update
 
-# Build and install GeographicLib from source
 WORKDIR /tmp
 RUN git clone https://github.com/GeographicLib/GeographicLib.git
 WORKDIR /tmp/GeographicLib
@@ -33,27 +32,30 @@ RUN mkdir -p src
 
 
 RUN wget https://raw.githubusercontent.com/autowarefoundation/autoware/main/autoware.repos
-
-# Import repositories using vcs
 RUN vcs import src < autoware.repos
 
 
 RUN git clone https://github.com/mohmmadsbeeh/autoware_v2v_cam_publisher_node.git src/autoware_v2v_cam_publisher_node
 
 
-RUN apt-get update && rosdep install --from-paths src --ignore-src -r -y
+RUN git clone https://github.com/ika-rwth-aachen/etsi_its_messages.git src/etsi_its_messages
 
+
+RUN apt-get update && rosdep install --from-paths src --ignore-src -r -y
 
 SHELL ["/bin/bash", "-c"]
 
 
 RUN source /opt/ros/humble/setup.bash && \
     export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:/usr/local/lib/cmake/GeographicLib && \
-    colcon build --symlink-install --packages-up-to autoware_v2x_cam_publisher --cmake-args -DCMAKE_BUILD_TYPE=Release
-
+    colcon build --symlink-install --packages-up-to autoware_v2x_cam_publisher etsi_its_messages --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
 RUN echo "source /home/autoware_ws/install/setup.bash" >> /root/.bashrc
 
 
-ENTRYPOINT ["/bin/bash"]
+COPY ./entrypoint/ros_entrypoint.sh /entrypoint/ros_entrypoint.sh
+RUN chmod +x /entrypoint/ros_entrypoint.sh
+
+
+ENTRYPOINT ["/bin/bash", "/entrypoint/ros_entrypoint.sh"]

@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  telemetry_v2x:
+    image: autoware_v2x_with_etsi:latest
+    entrypoint: /entrypoint/ros_entrypoint.sh
+    volumes:
+      - /dev/shm:/dev/shm
+      - ./entrypoint/:/entrypoint/
+    network_mode: "host"  
