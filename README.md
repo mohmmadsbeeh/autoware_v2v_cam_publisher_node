@@ -1,12 +1,11 @@
 # autoware_v2v_cam_publisher_node
- to create the container and configure it  the Network as Host
+ to build the image from the docker file 
 
- docker run -it --network host autoware_cam_publisher_image
+    docker build -t autoware_v2x_with_etsi:latest .
 
- to run the Node in normal mode :
- ros2 launch  autoware_v2x_cam_publisher cam_publisher_launch.py
 
- to run the Node in Debuging mode to see which if the the Containers are  populated  and the CAM msg is published :
+ u should run the the container from the docker compose file via 
+    
+    docker-compose up
 
- ros2 run autoware_v2x_cam_publisher cam_publisher_node --ros-args --params-file ./src/autoware_v2v_cam_publisher_node/params.yaml --log-level DEBUG
  
