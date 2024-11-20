@@ -267,18 +267,30 @@ void CamPublisherNode::populateHighFrequencyContainer(
   container.yaw_rate.yaw_rate_confidence.value = etsi_its_cam_msgs::msg::YawRateConfidence::DEG_SEC_000_01;   
 
   // Steering Wheel Angle
-  if (steering_report_)
-  {
-    container.steering_wheel_angle_is_present = true;
-    container.steering_wheel_angle.steering_wheel_angle_value.value = static_cast<int16_t>(
-      steering_report_->steering_tire_angle * DE_SteeringWheelAngleValue_Factor);  // rad to 0.0001 rad
-    container.steering_wheel_angle.steering_wheel_angle_confidence.value =
-      etsi_its_cam_msgs::msg::SteeringWheelAngleConfidence::EQUAL_OR_WITHIN_ONE_POINT_FIVE_DEGREE;   
+  if (steering_report_) {
+  container.steering_wheel_angle_is_present = true;
+  double steering_tire_angle_deg = steering_report_->steering_tire_angle * (180.0 / M_PI);
+  double value = steering_tire_angle_deg / 1.5;
+  int16_t steering_wheel_angle_value = static_cast<int16_t>(std::round(value));
+
+  // Clamp the value within -511 to +511
+  if (steering_wheel_angle_value > 511) {
+    steering_wheel_angle_value = 511;
+  } else if (steering_wheel_angle_value < -511) {
+    steering_wheel_angle_value = -511;
   }
-  else
-  {
-    container.steering_wheel_angle_is_present = false;
-  }
+
+  container.steering_wheel_angle.steering_wheel_angle_value.value = steering_wheel_angle_value;
+  container.steering_wheel_angle.steering_wheel_angle_confidence.value =
+    etsi_its_cam_msgs::msg::SteeringWheelAngleConfidence::EQUAL_OR_WITHIN_ONE_POINT_FIVE_DEGREE;
+} else {
+  container.steering_wheel_angle_is_present = true;
+  container.steering_wheel_angle.steering_wheel_angle_value.value =
+    etsi_its_cam_msgs::msg::SteeringWheelAngleValue::UNAVAILABLE;  // 512
+  container.steering_wheel_angle.steering_wheel_angle_confidence.value =
+    etsi_its_cam_msgs::msg::SteeringWheelAngleConfidence::UNAVAILABLE;
+}
+
 
   // Lateral and Vertical Acceleration
   if (imu_data_)

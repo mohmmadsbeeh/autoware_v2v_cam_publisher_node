@@ -7,4 +7,6 @@ services:
     volumes:
       - /dev/shm:/dev/shm
       - ./entrypoint/:/entrypoint/
-    network_mode: "host"  
+    network_mode: "host"
+    environment:
+      - ROS_DOMAIN_ID=4
