@@ -1,10 +1,10 @@
-udp_driver_node:
+udp_sender_node:
   ros__parameters:
     udp_config:
-      send_port: 5555
-      send_ip: 192.192.192.10
-      recv_port: 0  # Not used for sending
-      recv_ip: 0.0.0.0  # Not used for sending
+      send_port: 5555  
+      send_ip: 192.192.192.11
+      recv_port: 5555  
+      recv_ip: 192.192.192.10  
       multicast_interface_ip: 192.192.192.11
     topic_name: /etsi_its_conversion/udp/out
     msg_type: udp_msgs/msg/UdpPacket
