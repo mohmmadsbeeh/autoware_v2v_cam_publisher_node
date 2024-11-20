@@ -1,4 +1,4 @@
-udp_sender_node:
+udp_sender_node_exe:
   ros__parameters:
     udp_config:
       send_port: 5555  
