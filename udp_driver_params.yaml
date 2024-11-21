@@ -1,4 +1,5 @@
 udp_sender_node:
   ros__parameters:
-    ip: "192.192.192.10"   # Destination IP address
-    port: 9000             # Destination UDP port
+    ip: "192.192.192.10"
+    port: 9000
+    topic_name: "/etsi_its_conversion/udp/out"
