@@ -1,11 +1,4 @@
 udp_sender_node:
   ros__parameters:
-    udp_config:
-      send_ip: "192.192.192.10"  
-      send_port: 9000            
-      recv_port: 0              
-      recv_ip: "0.0.0.0"         
-      multicast_interface_ip: "0.0.0.0"  
-    topic_name: "/etsi_its_conversion/udp/out"  
-    msg_type: "udp_msgs/msg/UdpPacket"         
-    use_multicast: false
+    ip: "192.192.192.10"   # Destination IP address
+    port: 9000             # Destination UDP port
