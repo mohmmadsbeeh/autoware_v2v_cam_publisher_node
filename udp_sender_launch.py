@@ -10,7 +10,7 @@ def generate_launch_description():
         executable='udp_sender_node_exe',
         name='udp_sender_node',
         output='screen',
-        parameters=['~/autoware_ws/src/autoware_v2v_cam_publisher_node/udp_driver_params.yaml'],
+        parameters=['/home/autoware_ws/src/autoware_v2v_cam_publisher_node/udp_driver_params.yaml'],
     )
 
     # Define events to transition the node through the lifecycle
