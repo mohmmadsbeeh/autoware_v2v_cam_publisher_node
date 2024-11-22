@@ -43,10 +43,10 @@ docker-compose up
 ```
 
 
-### Usage
+## Usage
 
 The CAM publisher node collects vehicle data from the Autoware stack, constructs ETSI ITS CAM messages, and sends them over UDP to configured destinations. This enables other ITS-compliant systems to receive and process the vehicle's status information, facilitating cooperative awareness in traffic environments.
 
-### Contributing
+## Contributing
 
 Contributions are welcome! If you have suggestions for improvements or encounter any issues, please open an issue or submit a pull request.
