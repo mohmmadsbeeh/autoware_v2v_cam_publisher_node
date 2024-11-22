@@ -9,5 +9,6 @@ ros2 run autoware_v2x_cam_publisher cam_publisher_node --ros-args --params-file 
 
 ros2 launch etsi_its_conversion converter.launch.py
 
+ros2 launch udp_driver udp_sender_launch.py
 
 tail -f /dev/null

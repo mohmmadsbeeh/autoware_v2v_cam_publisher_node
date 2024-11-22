@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   telemetry_v2x:
+    build: .
     image: autoware_v2x_with_etsi:latest
     entrypoint: /entrypoint/ros_entrypoint.sh
     volumes:
