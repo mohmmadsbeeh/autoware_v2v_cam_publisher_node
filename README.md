@@ -34,3 +34,19 @@ To build the image from the Dockerfile:
 
 ```bash
 docker build -t autoware_v2x_with_etsi:latest .
+```
+
+Run the Container from the Docker Compose File, To start the container, use the following command:
+
+```bash
+docker-compose up
+```
+
+
+### Usage
+
+The CAM publisher node collects vehicle data from the Autoware stack, constructs ETSI ITS CAM messages, and sends them over UDP to configured destinations. This enables other ITS-compliant systems to receive and process the vehicle's status information, facilitating cooperative awareness in traffic environments.
+
+### Contributing
+
+Contributions are welcome! If you have suggestions for improvements or encounter any issues, please open an issue or submit a pull request.
