@@ -9,7 +9,7 @@
 // Include IMU message
 #include "sensor_msgs/msg/imu.hpp"
 
-// Include vehicle info utility
+// Include vehicle info utility (updated include)
 #include "autoware_vehicle_info_utils/vehicle_info_utils.hpp"
 
 // MQTT
@@ -50,8 +50,7 @@ private:
   sensor_msgs::msg::Imu::SharedPtr imu_data_;
 
   // Vehicle info
-  autoware::vehicle_info_utils::VehicleInfoUtils vehicle_info_utils_;
-  autoware::vehicle_info_utils::VehicleInfo vehicle_info_;
+  autoware_vehicle_info_utils::VehicleInfo vehicle_info_;
 
   // MQTT client
   mosquitto *mosq_;
