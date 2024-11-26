@@ -4,7 +4,7 @@
   <version>0.1.0</version>
   <description>The autoware_v2x_cam_publisher package publishes CAM messages for V2X communication.</description>
 
-  <maintainer email="you@example.com">Your Name</maintainer>
+  <maintainer email="mohammad.sbeeh@tha.de">Mohammad Sbeeh</maintainer>
 
   <license>Apache License 2.0</license>
 
@@ -15,7 +15,7 @@
   <build_depend>nav_msgs</build_depend>
   <build_depend>autoware_vehicle_msgs</build_depend>
   <build_depend>autoware_system_msgs</build_depend>
-  <build_depend>autoware_vehicle_info_utils</build_depend>
+  <build_depend>autoware_vehicle_info_util</build_depend>
   <build_depend>etsi_its_cam_msgs</build_depend>
   <build_depend>tf2</build_depend>
   <build_depend>tf2_ros</build_depend>
@@ -23,18 +23,15 @@
   <build_depend>sensor_msgs</build_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>autoware_planning_msgs</build_depend>
-  <build_depend>ament_cmake_auto</build_depend>
-
-  <!-- System dependency -->
-  <build_depend>libgeographic-dev</build_depend>
-  <exec_depend>libgeographic-dev</exec_depend>
+  <build_depend>nlohmann_json</build_depend> 
+  <build_depend>libmosquitto-dev</build_depend> 
 
   <!-- Execution dependencies -->
   <exec_depend>rclcpp</exec_depend>
   <exec_depend>nav_msgs</exec_depend>
   <exec_depend>autoware_vehicle_msgs</exec_depend>
   <exec_depend>autoware_system_msgs</exec_depend>
-  <exec_depend>autoware_vehicle_info_utils</exec_depend>
+  <exec_depend>autoware_vehicle_info_util</exec_depend>
   <exec_depend>etsi_its_cam_msgs</exec_depend>
   <exec_depend>tf2</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
@@ -42,6 +39,12 @@
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>autoware_planning_msgs</exec_depend>
+  <exec_depend>nlohmann_json</exec_depend>
+  <exec_depend>libmosquitto-dev</exec_depend> 
+
+  <!-- System dependency -->
+  <build_depend>libgeographic-dev</build_depend>
+  <exec_depend>libgeographic-dev</exec_depend>
 
   <!-- Export -->
   <export>

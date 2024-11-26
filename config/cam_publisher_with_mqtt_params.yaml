@@ -1,0 +1,10 @@
+cam_publisher_node_withMQTT:
+  ros__parameters:
+    mqtt_host: "localhost"
+    mqtt_port: 1883
+    mqtt_topic: "/nemo/cab1/telemetry"
+    mqtt_client_id: "cam_publisher_mqtt"
+    cab_id: 1
+    reference_latitude: 49.0   # Set the reference latitude
+    reference_longitude: 8.0   # Set the reference longitude
+    reference_altitude: 0.0    
