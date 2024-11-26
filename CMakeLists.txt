@@ -12,7 +12,7 @@ find_package(rclcpp REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(autoware_vehicle_msgs REQUIRED)
 find_package(autoware_system_msgs REQUIRED)
-find_package(autoware_vehicle_info_util REQUIRED)
+find_package(autoware_vehicle_info_utils REQUIRED)
 find_package(etsi_its_cam_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
@@ -50,7 +50,7 @@ ament_target_dependencies(cam_publisher_node
   nav_msgs
   autoware_vehicle_msgs
   autoware_system_msgs
-  autoware_vehicle_info_util
+  autoware_vehicle_info_utils
   etsi_its_cam_msgs
   tf2
   tf2_ros
@@ -66,7 +66,7 @@ ament_target_dependencies(cam_publisher_node_withMQTT
   nav_msgs
   autoware_vehicle_msgs
   autoware_system_msgs
-  autoware_vehicle_info_util
+  autoware_vehicle_info_utils
   etsi_its_cam_msgs
   tf2
   tf2_ros

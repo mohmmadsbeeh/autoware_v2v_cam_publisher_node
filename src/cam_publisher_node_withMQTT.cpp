@@ -27,7 +27,7 @@ CamPublisherNodeWithMQTT::CamPublisherNodeWithMQTT(const rclcpp::NodeOptions & o
 
   // Retrieve vehicle information
   autoware::common::vehicle_info::VehicleInfoUtil vehicle_info_util(*this);
-  vehicle_info_ = vehicle_info_util.getVehicleInfo();
+  vehicle_info_ = vehicle_info_utils_.getVehicleInfo();
 
   // Convert reference geographic coordinates to UTM
   GeographicLib::UTMUPS::Forward(ref_lat_, ref_lon_, utm_zone_, utm_northp_, ref_easting_, ref_northing_);
