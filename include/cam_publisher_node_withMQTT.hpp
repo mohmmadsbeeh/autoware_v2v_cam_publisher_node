@@ -50,7 +50,8 @@ private:
   sensor_msgs::msg::Imu::SharedPtr imu_data_;
 
   // Vehicle info (updated namespace)
-  autoware::common::vehicle_info::VehicleInfo vehicle_info_;
+  autoware::vehicle_info_utils::VehicleInfoUtils vehicle_info_utils_;
+  autoware::vehicle_info_utils::VehicleInfo vehicle_info_;
 
   // MQTT client
   mosquitto *mosq_;

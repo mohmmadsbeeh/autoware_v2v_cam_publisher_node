@@ -14,6 +14,7 @@ namespace cam_publisher_with_mqtt
 
 CamPublisherNodeWithMQTT::CamPublisherNodeWithMQTT(const rclcpp::NodeOptions & options)
 : Node("cam_publisher_node_withMQTT", options),
+  vehicle_info_utils_(this),
   mqtt_host_(this->declare_parameter<std::string>("mqtt_host", "localhost")),
   mqtt_port_(this->declare_parameter<int>("mqtt_port", 1883)),
   mqtt_topic_(this->declare_parameter<std::string>("mqtt_topic", "/nemo/cab1/telemetry")),
@@ -26,8 +27,7 @@ CamPublisherNodeWithMQTT::CamPublisherNodeWithMQTT(const rclcpp::NodeOptions & o
   RCLCPP_INFO(this->get_logger(), "Initializing CAM Publisher Node with MQTT...");
 
   // Retrieve vehicle information using the updated utility and namespace
-  autoware::common::vehicle_info::VehicleInfoUtil vehicle_info_util(*this);
-  vehicle_info_ = vehicle_info_util.getVehicleInfo();
+  vehicle_info_ = vehicle_info_utils_.getVehicleInfo();
 
   // Convert reference geographic coordinates to UTM
   GeographicLib::UTMUPS::Forward(ref_lat_, ref_lon_, utm_zone_, utm_northp_, ref_easting_, ref_northing_);
