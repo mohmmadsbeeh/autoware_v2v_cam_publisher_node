@@ -25,8 +25,8 @@ CamPublisherNodeWithMQTT::CamPublisherNodeWithMQTT(const rclcpp::NodeOptions & o
 {
   RCLCPP_INFO(this->get_logger(), "Initializing CAM Publisher Node with MQTT...");
 
-  // Retrieve vehicle information using the updated utility
-  autoware_vehicle_info_utils::VehicleInfoUtil vehicle_info_util(*this);
+  // Retrieve vehicle information using the updated utility and namespace
+  autoware::common::vehicle_info::VehicleInfoUtil vehicle_info_util(*this);
   vehicle_info_ = vehicle_info_util.getVehicleInfo();
 
   // Convert reference geographic coordinates to UTM
