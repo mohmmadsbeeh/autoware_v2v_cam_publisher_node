@@ -11,7 +11,7 @@ def generate_launch_description():
         package='autoware_v2x_cam_publisher',
         executable='cam_publisher_node_withMQTT',
         name='cam_publisher_node_withMQTT',
-        parameters=[param_file],
+        parameters=['autoware_ws/src/autoware_v2x_cam_publisher/config/cam_publisher_with_mqtt_params.yaml'],
         output='screen',
     )
 
