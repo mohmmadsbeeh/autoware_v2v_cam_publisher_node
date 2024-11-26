@@ -14,7 +14,7 @@ namespace cam_publisher_with_mqtt
 
 CamPublisherNodeWithMQTT::CamPublisherNodeWithMQTT(const rclcpp::NodeOptions & options)
 : Node("cam_publisher_node_withMQTT", options),
-  vehicle_info_utils_(this),
+  vehicle_info_utils_(*this),
   mqtt_host_(this->declare_parameter<std::string>("mqtt_host", "localhost")),
   mqtt_port_(this->declare_parameter<int>("mqtt_port", 1883)),
   mqtt_topic_(this->declare_parameter<std::string>("mqtt_topic", "/nemo/cab1/telemetry")),
