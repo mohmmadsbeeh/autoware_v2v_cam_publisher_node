@@ -11,7 +11,7 @@ def generate_launch_description():
         package='autoware_v2x_cam_publisher',
         executable='cam_publisher_node_withMQTT',
         name='cam_publisher_node_withMQTT',
-        parameters=['autoware_ws/src/autoware_v2x_cam_publisher/config/cam_publisher_with_mqtt_params.yaml',
+        parameters=['/home/autoware_ws/src/autoware_v2v_cam_publisher_node/config/cam_publisher_with_mqtt_params.yaml',
                    {
                 'station_id': 1,  # Station ID
 
