@@ -35,7 +35,7 @@ CamPublisherNodeWithMQTT::CamPublisherNodeWithMQTT(const rclcpp::NodeOptions & o
   // Initialize subscribers
   odometry_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
     "/localization/kinematic_state", 10,
-    std::bind(&CamPublisherNode::odometryCallback, this, std::placeholders::_1));
+    std::bind(&CamPublisherNodeWithMQTT::odometryCallback, this, std::placeholders::_1));
 
   imu_sub_ = this->create_subscription<sensor_msgs::msg::Imu>(
     "/vehicle/status/imu", 10,
