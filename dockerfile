@@ -1,3 +1,4 @@
+# the official ROS 2 Humble 
 FROM ros:humble
 
 RUN apt-get update && apt-get install -y \
@@ -11,10 +12,15 @@ RUN apt-get update && apt-get install -y \
     python3-vcstool \
     geographiclib-tools \
     libgeographic-dev \
+    libmosquitto-dev \
+    mosquitto-clients \
+    nlohmann-json3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN rosdep update
 
+
+RUN geographiclib-get-geoids egm96-5
 
 WORKDIR /tmp
 RUN git clone https://github.com/GeographicLib/GeographicLib.git
@@ -27,10 +33,8 @@ RUN mkdir build && cd build && \
 # Update shared library cache
 RUN ldconfig
 
-
 WORKDIR /home/autoware_ws
 RUN mkdir -p src
-
 
 RUN wget https://raw.githubusercontent.com/autowarefoundation/autoware/main/autoware.repos
 RUN vcs import src < autoware.repos
@@ -42,11 +46,9 @@ RUN apt-get update && rosdep install --from-paths src --ignore-src -r -y
 
 SHELL ["/bin/bash", "-c"]
 
-
 WORKDIR /home/autoware_ws
 
 RUN mkdir -p src/transport_drivers/udp_driver/launch
-
 
 RUN mv -f src/autoware_v2v_cam_publisher_node/src/udp_sender_node.cpp src/transport_drivers/udp_driver/src/
 RUN mv -f src/autoware_v2v_cam_publisher_node/include/udp_sender_node.hpp src/transport_drivers/udp_driver/include/udp_driver/
@@ -54,8 +56,6 @@ RUN mv src/autoware_v2v_cam_publisher_node/launch/udp_sender_launch.py src/trans
 RUN mv src/autoware_v2v_cam_publisher_node/config/udp_driver_params.yaml src/transport_drivers/udp_driver/params/
 RUN mv -f src/autoware_v2v_cam_publisher_node/entrypoint/udp_driver/CMakeLists.txt src/transport_drivers/udp_driver/
 RUN mv -f src/autoware_v2v_cam_publisher_node/entrypoint/udp_driver/package.xml src/transport_drivers/udp_driver/
-
-
 
 RUN source /opt/ros/humble/setup.bash && \
     export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:/usr/local/lib/cmake/GeographicLib && \
