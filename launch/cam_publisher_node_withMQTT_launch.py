@@ -26,7 +26,7 @@ def generate_launch_description():
                 'right_overhang': 0.5,
                 'vehicle_height': 1.5,
                 'vehicle_width': 1.8,
-                'vehicle_length': 4.1,  # wheel_base + front_overhang + rear_overhang
+                'vehicle_length': 4.1,  
                 'max_steer_angle': 0.785,  # in radians (~45 degrees)
 
                 # Reference position for coordinate conversion
