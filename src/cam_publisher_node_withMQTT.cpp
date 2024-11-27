@@ -26,7 +26,7 @@ CamPublisherNodeWithMQTT::CamPublisherNodeWithMQTT(const rclcpp::NodeOptions & o
 {
   RCLCPP_INFO(this->get_logger(), "Initializing CAM Publisher Node with MQTT...");
 
-  // Retrieve vehicle information using the updated utility and namespace
+  // Retrieve vehicle information
   vehicle_info_ = vehicle_info_utils_.getVehicleInfo();
 
   // Convert reference geographic coordinates to UTM
@@ -37,9 +37,9 @@ CamPublisherNodeWithMQTT::CamPublisherNodeWithMQTT(const rclcpp::NodeOptions & o
     "/localization/kinematic_state", 10,
     std::bind(&CamPublisherNodeWithMQTT::odometryCallback, this, std::placeholders::_1));
 
-  imu_sub_ = this->create_subscription<sensor_msgs::msg::Imu>(
-    "/vehicle/status/imu", 10,
-    std::bind(&CamPublisherNodeWithMQTT::imuCallback, this, std::placeholders::_1));
+  acceleration_sub_ = this->create_subscription<geometry_msgs::msg::AccelWithCovarianceStamped>(
+    "/localization/acceleration", 10,
+    std::bind(&CamPublisherNodeWithMQTT::accelerationCallback, this, std::placeholders::_1));
 
   // Initialize timer
   timer_ = this->create_wall_timer(
@@ -60,7 +60,7 @@ CamPublisherNodeWithMQTT::CamPublisherNodeWithMQTT(const rclcpp::NodeOptions & o
   current_charge_power_ = 500.0f;      // Dummy value in W
   odometer_ = 12345;                   // Dummy value in km
   cumulative_charge_energy_ = 50.0f;   // Dummy value in kWh
-  current_load_ = 2;                   // Dummy value in Anzahl Personen
+  current_load_ = 2;                   // Dummy value in number of passengers
   ad_general_status_ = 0;              // Dummy status
   ad_coupling_status_ = 0;             // Dummy status
 
@@ -110,9 +110,9 @@ void CamPublisherNodeWithMQTT::odometryCallback(const nav_msgs::msg::Odometry::S
   odometry_ = msg;
 }
 
-void CamPublisherNodeWithMQTT::imuCallback(const sensor_msgs::msg::Imu::SharedPtr msg)
+void CamPublisherNodeWithMQTT::accelerationCallback(const geometry_msgs::msg::AccelWithCovarianceStamped::SharedPtr msg)
 {
-  imu_data_ = msg;
+  acceleration_data_ = msg;
 }
 
 void CamPublisherNodeWithMQTT::publishData()
@@ -122,8 +122,8 @@ void CamPublisherNodeWithMQTT::publishData()
     return;
   }
 
-  if (!imu_data_) {
-    RCLCPP_WARN(this->get_logger(), "Waiting for IMU data to publish");
+  if (!acceleration_data_) {
+    RCLCPP_WARN(this->get_logger(), "Waiting for acceleration data to publish");
     return;
   }
 
@@ -139,19 +139,19 @@ void CamPublisherNodeWithMQTT::publishData()
   double latitude, longitude;
   GeographicLib::UTMUPS::Reverse(utm_zone_, utm_northp_, abs_easting, abs_northing, latitude, longitude);
 
-  // Richtung: Heading in degrees deviation from North
+  // Heading: in degrees deviation from North
   double heading_rad = tf2::getYaw(odometry_->pose.pose.orientation);
   double heading_deg = heading_rad * 180.0 / M_PI;
   if (heading_deg < 0)
     heading_deg += 360.0;
 
-  // Geschwindigkeit: Speed in km/h
+  // Speed: in km/h
   double speed_mps = odometry_->twist.twist.linear.x;
   double speed_kmh = speed_mps * 3.6;
 
-  // Beschleunigung: Acceleration x, y from IMU data
-  float acceleration_x = imu_data_->linear_acceleration.x;
-  float acceleration_y = imu_data_->linear_acceleration.y;
+  // Acceleration: x and y from acceleration data
+  float acceleration_x = acceleration_data_->accel.accel.linear.x;
+  float acceleration_y = acceleration_data_->accel.accel.linear.y;
 
   // Create JSON object
   nlohmann::json data_json;

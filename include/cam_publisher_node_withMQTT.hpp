@@ -6,10 +6,10 @@
 // Include nav_msgs for Odometry
 #include "nav_msgs/msg/odometry.hpp"
 
-// Include IMU message
-#include "sensor_msgs/msg/imu.hpp"
+// Include AccelWithCovarianceStamped message
+#include "geometry_msgs/msg/accel_with_covariance_stamped.hpp"
 
-// Include vehicle info utility (updated include and namespace)
+// Include vehicle info utility
 #include "autoware_vehicle_info_utils/vehicle_info_utils.hpp"
 
 // MQTT
@@ -33,23 +33,23 @@ public:
 private:
   // Subscriber callbacks
   void odometryCallback(const nav_msgs::msg::Odometry::SharedPtr msg);
-  void imuCallback(const sensor_msgs::msg::Imu::SharedPtr msg);
+  void accelerationCallback(const geometry_msgs::msg::AccelWithCovarianceStamped::SharedPtr msg);
 
   // Timer callback to publish data
   void publishData();
 
   // Subscriptions
   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odometry_sub_;
-  rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
+  rclcpp::Subscription<geometry_msgs::msg::AccelWithCovarianceStamped>::SharedPtr acceleration_sub_;
 
   // Timer
   rclcpp::TimerBase::SharedPtr timer_;
 
   // Stored data
   nav_msgs::msg::Odometry::SharedPtr odometry_;
-  sensor_msgs::msg::Imu::SharedPtr imu_data_;
+  geometry_msgs::msg::AccelWithCovarianceStamped::SharedPtr acceleration_data_;
 
-  // Vehicle info (updated namespace)
+  // Vehicle info
   autoware::vehicle_info_utils::VehicleInfoUtils vehicle_info_utils_;
   autoware::vehicle_info_utils::VehicleInfo vehicle_info_;
 
@@ -78,19 +78,19 @@ private:
   double current_longitude_deg_;
 
   // Dummy variables for parameters not available from Autoware
-  int component_temperatures_;          // Komponententemperaturen, integer, °C
-  float battery_soc_;                   // Batteriestand (SoC), float/double, Prozent
-  float battery_voltage_;               // Batteriespannung, float/double, V
-  int battery_discharge_current_;       // Batterie-Entladestrom, integer, A
-  float battery_charge_current_;        // Batterie-Ladestrom, float/double, A
-  float motor_current_;                 // Motorstrom, float/double, A
-  float current_discharge_power_;       // Aktuelle Entladeleistung, float/double, W
-  float current_charge_power_;          // aktuelle Ladeleistung, float/double, W
-  int odometer_;                        // Kilometerstand, integer, km
-  float cumulative_charge_energy_;      // Energie Ladung kummulativ, float/double, kWh
-  int current_load_;                    // aktuelle Beladung bzw. Anzahl Personen, integer, Anzahl Personen
-  int ad_general_status_;               // AD Status Allgemein, integer, Stati
-  int ad_coupling_status_;              // AD Koppelzustand/Vorgang, integer, Stati
+  int component_temperatures_;          // Component temperatures, integer, °C
+  float battery_soc_;                   // Battery state of charge (SoC), float, percent
+  float battery_voltage_;               // Battery voltage, float, V
+  int battery_discharge_current_;       // Battery discharge current, integer, A
+  float battery_charge_current_;        // Battery charge current, float, A
+  float motor_current_;                 // Motor current, float, A
+  float current_discharge_power_;       // Current discharge power, float, W
+  float current_charge_power_;          // Current charge power, float, W
+  int odometer_;                        // Odometer reading, integer, km
+  float cumulative_charge_energy_;      // Cumulative charge energy, float, kWh
+  int current_load_;                    // Current load (number of passengers), integer
+  int ad_general_status_;               // Autonomous driving general status, integer
+  int ad_coupling_status_;              // Autonomous driving coupling status, integer
 };
 
 }  // namespace cam_publisher_with_mqtt
