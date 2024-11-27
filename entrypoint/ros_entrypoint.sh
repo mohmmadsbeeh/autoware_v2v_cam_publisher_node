@@ -6,6 +6,7 @@ source /home/autoware_ws/install/setup.bash
 
 ros2 run autoware_v2x_cam_publisher cam_publisher_node --ros-args --params-file ./src/autoware_v2v_cam_publisher_node/config/params.yaml --log-level DEBUG &
 ros2 launch etsi_its_conversion converter.launch.py &
-ros2 launch udp_driver udp_sender_launch.py
+ros2 launch autoware_v2x_cam_publisher cam_publisher_node_withMQTT_launch.py &
+ros2 launch udp_driver udp_sender_launch.py 
 
 tail -f /dev/null
