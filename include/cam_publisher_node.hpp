@@ -141,7 +141,7 @@ private:
   static constexpr double DE_SteeringWheelAngleValue_Factor = 10000.0;  // rad to 0.0001 rad, DE_SteeringWheelAngleValue, A.80, page 61
   static constexpr double DE_CurvatureValue_Factor = 10000.0;  // 1/m to 0.0001 1/m, DE_CurvatureValue, A.15, page 27
   static constexpr double Sec_Mili = 1000.0;  // Seconds to milliseconds
-  static constexpr double Rad_Deg = (180.0 / M_PI)
+  static constexpr double Rad_Deg = (180.0 / M_PI);
 };
 
 }  // namespace cam_publisher
