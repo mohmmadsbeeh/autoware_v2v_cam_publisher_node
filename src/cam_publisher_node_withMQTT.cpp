@@ -90,13 +90,23 @@ void CamPublisherNodeWithMQTT::init_mqtt()
     mosq_ = nullptr;
   } else {
     RCLCPP_INFO(this->get_logger(), "Connected to MQTT broker at %s:%d", mqtt_host_.c_str(), mqtt_port_);
+
+    // Start the Mosquitto network handling loop
+    int loop_ret = mosquitto_loop_start(mosq_);
+    if (loop_ret != MOSQ_ERR_SUCCESS) {
+      RCLCPP_ERROR(this->get_logger(), "Failed to start Mosquitto loop: %s", mosquitto_strerror(loop_ret));
+      mosquitto_disconnect(mosq_);
+      mosquitto_destroy(mosq_);
+      mosq_ = nullptr;
+    }
   }
 }
 
-// Cleanup MQTT client
 void CamPublisherNodeWithMQTT::cleanup_mqtt()
 {
   if (mosq_) {
+    // Stop the Mosquitto network handling loop
+    mosquitto_loop_stop(mosq_, true);
     mosquitto_disconnect(mosq_);
     mosquitto_destroy(mosq_);
     mosq_ = nullptr;

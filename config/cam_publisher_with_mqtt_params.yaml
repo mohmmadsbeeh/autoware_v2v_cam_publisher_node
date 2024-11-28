@@ -5,6 +5,18 @@ cam_publisher_node_withMQTT:
     mqtt_topic: "/nemo/cab1/telemetry"
     mqtt_client_id: "cam_publisher_mqtt"
     cab_id: 1
-    reference_latitude: 49.0   # Set the reference latitude
-    reference_longitude: 8.0   # Set the reference longitude
-    reference_altitude: 0.0    
+    reference_latitude: 49.0
+    reference_longitude: 8.0
+    reference_altitude: 0.0
+    wheel_radius: 0.3
+    wheel_width: 0.2
+    wheel_base: 2.5
+    wheel_tread: 1.6
+    front_overhang: 0.8
+    rear_overhang: 0.8
+    left_overhang: 0.5
+    right_overhang: 0.5
+    vehicle_height: 1.5
+    vehicle_width: 1.8
+    vehicle_length: 4.1
+    max_steer_angle: 0.785
