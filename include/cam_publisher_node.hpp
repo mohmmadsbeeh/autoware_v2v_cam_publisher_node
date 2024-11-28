@@ -26,9 +26,6 @@
 // GeographicLib for coordinate conversions
 #include <GeographicLib/UTMUPS.hpp>
 
-// Include IMU message
-#include "sensor_msgs/msg/imu.hpp"
-
 // Include Acceleration message
 #include "geometry_msgs/msg/accel_with_covariance_stamped.hpp"
 
@@ -64,8 +61,6 @@ private:
     const autoware_vehicle_msgs::msg::HazardLightsReport::SharedPtr msg);
   void turnIndicatorsReportCallback(
     const autoware_vehicle_msgs::msg::TurnIndicatorsReport::SharedPtr msg);
-  void imuCallback(
-    const sensor_msgs::msg::Imu::SharedPtr msg);
   void accelerationCallback(
     const geometry_msgs::msg::AccelWithCovarianceStamped::SharedPtr msg);
   void trajectoryCallback(
@@ -91,7 +86,6 @@ private:
   rclcpp::Subscription<autoware_system_msgs::msg::AutowareState>::SharedPtr autoware_state_sub_;
   rclcpp::Subscription<autoware_vehicle_msgs::msg::HazardLightsReport>::SharedPtr hazard_lights_report_sub_;
   rclcpp::Subscription<autoware_vehicle_msgs::msg::TurnIndicatorsReport>::SharedPtr turn_indicators_report_sub_;
-  rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
   rclcpp::Subscription<geometry_msgs::msg::AccelWithCovarianceStamped>::SharedPtr acceleration_sub_;
   rclcpp::Subscription<autoware_planning_msgs::msg::Trajectory>::SharedPtr trajectory_sub_;
 
@@ -108,7 +102,6 @@ private:
   autoware_system_msgs::msg::AutowareState::SharedPtr autoware_state_;
   autoware_vehicle_msgs::msg::HazardLightsReport::SharedPtr hazard_lights_report_;
   autoware_vehicle_msgs::msg::TurnIndicatorsReport::SharedPtr turn_indicators_report_;
-  sensor_msgs::msg::Imu::SharedPtr imu_data_;
   geometry_msgs::msg::AccelWithCovarianceStamped::SharedPtr acceleration_;
   autoware_planning_msgs::msg::Trajectory::SharedPtr trajectory_;
 
@@ -139,7 +132,7 @@ private:
   static constexpr double DE_SpeedValue_Factor = 100.0;  // m/s to cm/s, DE_SpeedValue, A.74, page 57
   static constexpr double DE_LongitudinalAccelerationValue_Factor = 10.0;  // m/s² to 0.1 m/s², DE_LongitudinalAccelerationValue, A.45, page 43
   static constexpr double DE_YawRateValue_Factor = 10000.0;  // rad/s to 0.0001 rad/s, DE_YawRateValue, A.101, page 71
-  static constexpr double DE_HeadingValue_Factor = 10.0 * (180.0 / M_PI);  // rad to 0.1 degrees, DE_HeadingValue, A.35, page 38
+  static constexpr double DE_HeadingValue_Factor = 10.0;  // Degrees to 0.1 degrees, DE_HeadingValue, A.35, page 38
   static constexpr double DE_Latitude_Factor = 1e7;  // degrees to 10^-7 degrees, DE_Latitude, A.41, page 41
   static constexpr double DE_Longitude_Factor = 1e7;  // degrees to 10^-7 degrees, DE_Longitude, A.44, page 43
   static constexpr double DE_AltitudeValue_Factor = 100.0;  // meters to centimeters, DE_AltitudeValue, A.9, page 22
@@ -147,8 +140,8 @@ private:
   static constexpr double DE_VehicleWidth_Factor = 100.0;  // meters to centimeters, DE_VehicleWidth, A.95, page 67
   static constexpr double DE_SteeringWheelAngleValue_Factor = 10000.0;  // rad to 0.0001 rad, DE_SteeringWheelAngleValue, A.80, page 61
   static constexpr double DE_CurvatureValue_Factor = 10000.0;  // 1/m to 0.0001 1/m, DE_CurvatureValue, A.15, page 27
-  static constexpr double Sec_Mili =1000.0; 
-  
+  static constexpr double Sec_Mili = 1000.0;  // Seconds to milliseconds
+  static constexpr double Rad_Deg = (180.0 / M_PI)
 };
 
 }  // namespace cam_publisher
